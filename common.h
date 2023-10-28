@@ -34,22 +34,9 @@ using vs = std::vector<std::string>;
   if (!(expr))                                                                 \
     throw std::runtime_error((err));
 
-namespace gb {
-// Sad state of c++ where range based iteration with split_view is just
-// impossible to work in gcc 11.3
-/*std::vector<std::string_view> split(const std::string &sentence,
-                                    const std::string &delim) {
-  std::vector<std::string_view> vs{};
-  size_t s{0}, e{0};
-  auto it = sentence.begin();
-  while ((e = sentence.find(delim, s)) != std::string::npos) {
-    vs.emplace_back(std::string_view{it, std::next(it, (e - s))});
-    std::advance(it, (e - s) + delim.size());
-    s = e + delim.size();
-  }
-  return vs;
-}*/
+using namespace std::string_view_literals;
 
+namespace gb {
 std::vector<std::string_view> split(std::string_view sentence,
                                     std::string delim) {
   if (sentence.length() == 0)
@@ -75,5 +62,5 @@ std::vector<std::string> readIn() {
   return lines;
 }
 
-void writeOut(std::string s) { std::cout << s << std::endl; }
+void writeOut(std::string_view s) { std::cout << s << std::endl; }
 } // namespace gb
