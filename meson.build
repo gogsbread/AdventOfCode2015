@@ -18,3 +18,7 @@ openssl = dependency('openssl')
 executable('4',
     '4.cpp',
     dependencies: [openssl])
+
+executable('5',
+    '5.cpp',
+    dependencies: [])
