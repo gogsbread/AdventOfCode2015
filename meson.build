@@ -13,3 +13,8 @@ executable('2',
 executable('3',
     '3.cpp',
     dependencies: [])
+
+openssl = dependency('openssl')
+executable('4',
+    '4.cpp',
+    dependencies: [openssl])
