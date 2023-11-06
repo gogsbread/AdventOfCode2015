@@ -6,6 +6,7 @@
 #include <climits>
 #include <cmath>
 #include <complex>
+#include <concepts>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -41,7 +42,7 @@ using namespace std::string_view_literals;
 
 namespace gb {
 std::vector<std::string_view> split(std::string_view sentence,
-                                    std::string delim) {
+                                    std::string_view delim) {
   if (sentence.length() == 0)
     return {};
   if (delim.length() == 0)
