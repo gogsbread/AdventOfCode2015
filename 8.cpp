@@ -1,7 +1,5 @@
 #include "common.h"
 
-#include <openssl/md5.h>
-
 namespace {
 int p1(const std::vector<std::string> &in) {
   int t{0};
