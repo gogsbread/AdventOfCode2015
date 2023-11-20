@@ -59,6 +59,27 @@ std::vector<std::string_view> split(std::string_view sentence,
   return r;
 }
 
+template <typename T> auto arg_handle(T &arg) {
+  if constexpr (std::is_same_v<std::decay_t<T>, std::string>) {
+    arg.resize(100);
+    return arg.data();
+  } else {
+    return &arg;
+  }
+}
+
+template <typename T> auto arg_resize(T &arg) {
+  if constexpr (std::is_same_v<std::decay_t<T>, std::string>) {
+    arg.resize(strlen(arg.data()));
+  }
+}
+
+template <typename... Args>
+void sscanf(std::string_view in, std::string_view fmt, Args &...args) {
+  ::sscanf(in.data(), fmt.data(), arg_handle(args)...);
+  (arg_resize(args), ...);
+}
+
 std::vector<std::string> readIn() {
   std::vector<std::string> lines;
   for (std::string l; getline(std::cin, l);) {
