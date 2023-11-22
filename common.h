@@ -75,7 +75,8 @@ template <typename T> auto arg_resize(T &arg) {
 }
 
 template <typename... Args>
-void sscanf(std::string_view in, std::string_view fmt, Args &...args) {
+void sscanf(const std::string_view in, const std::string_view fmt,
+            Args &...args) {
   ::sscanf(in.data(), fmt.data(), arg_handle(args)...);
   (arg_resize(args), ...);
 }

@@ -41,9 +41,43 @@ int p1(const std::vector<std::string> &in) {
   } while (std::next_permutation(ppl.begin(), ppl.end()));
   return hmax;
 }
+
+int p2(const std::vector<std::string> &in) {
+  Graph g{};
+  const std::string me{"me"};
+  std::set<std::string> st{me};
+  std::string s{}, c{}, e{};
+  int p{};
+  for (const auto &l : in) {
+    gb::sscanf(l,
+               "%23s would %9s %d happiness units by sitting next to %23[^.].",
+               s, c, p, e);
+    g[Edge{s, e}] = (c == "gain") ? p : -p;
+    st.emplace(s);
+  }
+  for (const std::string &s : st) {
+    g[Edge{s, me}] = 0;
+    g[Edge{me, s}] = 0;
+  }
+
+  std::vector<std::string> ppl{st.begin(), st.end()};
+  int hmax{std::numeric_limits<int>::min()};
+  do {
+    int h{0};
+    for (size_t i{0}; i < ppl.size(); ++i) {
+      int l = (i - 1 + ppl.size()) % ppl.size();
+      int r = (i + 1 + ppl.size()) % ppl.size();
+      h += g.at(Edge{ppl[i], ppl[l]});
+      h += g.at(Edge{ppl[i], ppl[r]});
+    }
+    hmax = std::max(h, hmax);
+  } while (std::next_permutation(ppl.begin(), ppl.end()));
+  return hmax;
+}
 } // namespace
 
 int main() {
   const auto &in = gb::readIn();
   gb::writeOut(std::to_string(p1(in)));
+  gb::writeOut(std::to_string(p2(in)));
 }
