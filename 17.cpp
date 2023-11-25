@@ -21,7 +21,7 @@ int p1(const std::vector<std::string> &in, int tgt) {
   return r;
 }
 
-int p1(const std::vector<std::string> &in, int tgt) {
+int p2(const std::vector<std::string> &in, int tgt) {
   std::vector<int> conts;
   for (const std::string &s : in) {
     conts.emplace_back(std::stoi(s));
@@ -38,12 +38,13 @@ int p1(const std::vector<std::string> &in, int tgt) {
       r[std::bitset<sizeof(int) * 8>(i).count()] += 1;
     }
   }
-  return r;
+  return r.begin()->second;
 }
 } // namespace
 
 int main() {
   const auto &in = gb::readIn();
-  gb::writeOut(std::to_string(p1(in, 150)));
-  // gb::writeOut(std::to_string(p2(in)));
+  constexpr int n = 150;
+  gb::writeOut(std::to_string(p1(in, n)));
+  gb::writeOut(std::to_string(p2(in, n)));
 }
